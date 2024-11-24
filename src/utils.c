@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:34:23 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/23 16:13:08 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/24 12:05:50 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,40 @@ int	space_verification(char c)
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
 		|| c == '\r');
 }
+/* Calculate the lenth of the given array*/
+int	array_len(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
+/* Printing error msg and exit the program */
+void error_exit()
+{
+	printf("Colors error");
+	exit(1);
+}
+/* Verificate the color string if valid or not */
+int is_number(const char *str)
+{
+    if (!str || *str == '\0')
+        return (0);
+
+    while (*str == ' ' || *str == '\t')
+        str++;
+
+    if (*str == '\0')
+        return (0);
+    while (*str >= '0' && *str <= '9')
+        str++;
+    while (*str == ' ' || *str == '\t')
+        str++;
+	if (*str != '\n' && *str != '\0')
+		return(0);
+    return (1); 
+}
+
 

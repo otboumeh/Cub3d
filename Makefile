@@ -6,7 +6,7 @@
 #    By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/03 16:25:10 by otboumeh          #+#    #+#              #
-#    Updated: 2024/11/23 11:57:22 by otboumeh         ###   ########.fr        #
+#    Updated: 2024/11/24 14:34:32 by otboumeh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MLX			=	-lXext -lX11 -lm -lbsd
 NAME		=	cub3d
 
 #Ficheros
-SRC_FILES	= main check_map read_map map
+SRC_FILES	= main check_map util_map utils freedom parsing prints
 	
 
 SRC			=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
