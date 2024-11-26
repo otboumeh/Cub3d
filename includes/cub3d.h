@@ -6,15 +6,14 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 12:06:37 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/24 14:35:50 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:04:10 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 # include "../src/libft/libft.h"
-# define HEXL "0123456789abcdef"
-# define HEXU "0123456789ABCDEF"
+
 
 
 typedef struct s_player_position
@@ -23,6 +22,8 @@ typedef struct s_player_position
 	int		y;
 	int		pos_x;
 	int		pos_y;
+	char	orientation;
+
 }			t_player_position;
 
 typedef struct s_cube
@@ -42,10 +43,10 @@ typedef struct s_cube
 	// double			time_initial;
 
 	// int				map_axis_y; //copia + pega so_long no funciona con cube
-	// char			**map; //copia + pega so_long no funciona con cube
+	// char				**map; //copia + pega so_long no funciona con cube
 	// int				map_bool; //copia + pega so_long no funciona con cube
 
-	// char			*png_floor;
+	// char				*png_floor;
 	// mlx_texture_t	*texture_floor;
 	// mlx_image_t		*img_floor;
 	
@@ -78,15 +79,21 @@ int		verification_start(t_cube *cube,\
 
 //util_map.c
 void	delete_tab(char ***map, int i);
+int		last_verification(t_cube *cube, t_player_position *player_position);
+int		validate_file(t_cube *cube);
 
 //utils.c
 int		space_verification(char c);
 int		array_len(char **array);
 void 	error_exit();
 int		is_number(const char *str);
+void	set_initial_position(t_player_position *player_position, int x, int y,
+		char orientation);
 //print
 char	*ft_sprintf(char const *container, ...);
 
+//map_parsing
+int	validate_map(t_cube *cube, t_player_position *player_position);
 
 
 #endif

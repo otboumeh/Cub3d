@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:34:23 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/24 12:05:50 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:03:53 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ int is_number(const char *str)
 	if (*str != '\n' && *str != '\0')
 		return(0);
     return (1); 
+}
+void	set_initial_position(t_player_position *player_position, int x, int y,
+		char orientation)
+{
+	player_position->x = x;
+	player_position->y = y;
+	player_position->orientation = orientation;
+	printf("Start position: %d, %d, %c\n", player_position->x,
+		player_position->y, player_position->orientation);
 }
 
 
