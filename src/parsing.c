@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:47:40 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/24 14:10:51 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/28 12:01:31 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,40 +74,50 @@ int	parse_colors(char *line, int color[3])
 /* This function verify line per line to verify the existance of the structure and send the information 
 to the correspendent function if all struct is found start analizing the map if the variable flag is 
 positif free the program */
+static int	parse_texture_or_color(char *line, char *trimmed_line, t_cube *cube)
+{
+	if (ft_strncmp("NO ", trimmed_line, 3) == 0)
+		cube->north_texture = line_verification(trimmed_line);
+	else if (ft_strncmp("SO ", trimmed_line, 3) == 0)
+		cube->south_texture = line_verification(trimmed_line);
+	else if (ft_strncmp("WE ", trimmed_line, 3) == 0)
+		cube->west_texture = line_verification(trimmed_line);
+	else if (ft_strncmp("EA ", trimmed_line, 3) == 0)
+		cube->east_texture = line_verification(trimmed_line);
+	else if (ft_strncmp("F ", trimmed_line, 2) == 0)
+		return (parse_colors(trimmed_line + 1, cube->floor_color));
+	else if (ft_strncmp("C ", trimmed_line, 2) == 0)
+		return (parse_colors(trimmed_line + 1, cube->ceiling_color));
+	else
+		parse_map(line, cube);
+	return (0);
+}
+
 int	parse_line(char *line, t_cube *cube)
 {
-	int	flag;
+	int		flag;
+	char	*trimmed_line;
 
-	flag = 0;
 	if (!line)
 		return (1);
-	if (!flag && ft_strncmp("NO ", line, 3) == 0)
-		cube->north_texture = line_verification(line);
-	else if (!flag && ft_strncmp("SO ", line, 3) == 0)
-		cube->south_texture = line_verification(line);
-	else if (!flag && ft_strncmp("WE ", line, 3) == 0)
-		cube->west_texture = line_verification(line);
-	else if (!flag && ft_strncmp("EA ", line, 3) == 0)
-		cube->east_texture = line_verification(line);
-	else if (!flag && ft_strncmp("F ", line, 2) == 0)
-		flag = parse_colors(line + 1, cube->floor_color);
-	else if (!flag && ft_strncmp("C ", line, 2) == 0)
-		flag = parse_colors(line + 1, cube->ceiling_color);
-	else
-	 	parse_map(line, cube);
+	trimmed_line = ft_strtrim(line, " \t");
+	if (!trimmed_line)
+		return (1);
+	flag = parse_texture_or_color(line, trimmed_line, cube);
+	free(trimmed_line);
 	if (flag)
-	{	
+	{
 		free_line(line, cube);
 		error_exit();
 	}
 	return (0);
 }
+
 void	parse_map(char *line, t_cube *cube)
 {
 	int		map_size;
 	char	**tmp;
 	int		i;
-
 	if (cube->map != NULL)
 		map_size = array_len(cube->map);
 	else

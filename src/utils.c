@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:34:23 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/26 11:03:53 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/28 11:37:09 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ int	array_len(char **array)
 /* Printing error msg and exit the program */
 void error_exit()
 {
-	printf("Colors error");
+	printf("Error!");
 	exit(1);
 }
 /* Verificate the color string if valid or not */
 int is_number(const char *str)
 {
-    if (!str || *str == '\0')
+    if (!str || *str == '\0' || *str =='\n')
         return (0);
 
     while (*str == ' ' || *str == '\t')
         str++;
 
-    if (*str == '\0')
+    if (*str == '\0' || *str == '\n')
         return (0);
     while (*str >= '0' && *str <= '9')
         str++;

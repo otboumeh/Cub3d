@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 12:35:49 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/24 10:17:12 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/28 11:47:11 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ int	read_file(char *file, t_cube *cube)
 		free(line);
 	}
 	close(fd);
+
 	return (0);
 }

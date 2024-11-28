@@ -6,14 +6,14 @@
 #    By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/03 16:25:10 by otboumeh          #+#    #+#              #
-#    Updated: 2024/11/26 10:40:37 by otboumeh         ###   ########.fr        #
+#    Updated: 2024/11/28 11:51:03 by otboumeh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #Comandos
 DEL			=	rm -f
 CC			=	gcc 
-CCFLAGS		=	-Wall -Wextra -Werror 
+CCFLAGS		=	-Wall -Wextra -Werror -g
 MLX			=	-lXext -lX11 -lm -lbsd 
 
 #Nombre ejecutable

@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:54:40 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/26 10:38:48 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/28 11:59:41 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	delete_tab(char ***map, int i)
 	char	*to_append;
 
 	while ((*map)[++i])
-	{
+	{	
+		if (*map == NULL || (*map)[i] == NULL)
+    		return;
 		new_line = ft_strdup("");
 		j = -1;
 		while ((*map)[i][++j])

@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 12:04:14 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/26 10:33:45 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/28 11:47:04 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	verification_start(t_cube *cube,\
 	delete_tab(&cube->map, -1);
 	if (last_verification(cube, player_position))
 		return (1);
-	
+
 }
 int	main(int argc, char **argv)
 {
