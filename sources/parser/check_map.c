@@ -6,7 +6,7 @@
 /*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 12:35:49 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/29 09:49:52 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/29 09:54:25 by tshiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_extension(char *argv1, t_cube *cube)
 	i = ft_strlen(argv1);
 	if (ft_strncmp(&argv1[i - 4], ".cub", 4) != 0)
 	{
-		printf("\nError\n Map file must have .cub extension \n");
+		printf("\nError\n Map file must have .cub extension. \n");
 		exit(1);
 	}
 
