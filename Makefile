@@ -3,77 +3,62 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+         #
+#    By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/06/03 16:25:10 by otboumeh          #+#    #+#              #
-#    Updated: 2024/11/28 11:51:03 by otboumeh         ###   ########.fr        #
+#    Created: 2024/11/12 16:11:59 by dangonz3          #+#    #+#              #
+#    Updated: 2024/11/27 19:21:03 by dangonz3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#Comandos
-DEL			=	rm -f
-CC			=	gcc 
-CCFLAGS		=	-Wall -Wextra -Werror -g
-MLX			=	-lXext -lX11 -lm -lbsd 
+NAME = cub3D
+CC = gcc
+CCFLAGS = -Wall -Wextra -Werror
 
-#Nombre ejecutable
-NAME		=	cub3d
+COLOR_GREEN = \033[0;32m
+COLOR_RESET = \033[0m
 
-#Ficheros
-SRC_FILES	= main check_map util_map utils freedom parsing map_parsing
+SRC_DIR = sources/
+SRC = $(shell find ./$(SRC_DIR) -iname "*.c")
+OBJ = $(SRC:.c=.o)
+
+HEADERS = -I ./include -I $(MLX_DIR)/include
+
+LIBFT_DIR = ./libft
+LIBFT_LIB = $(LIBFT_DIR)/libft.a
 	
+MLX_DIR = ./mlx
+MLX_LIB = $(MLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
-SRC			=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
-OBJ			=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
+all:libmlx $(LIBFT_LIB) $(NAME)
+	@echo "$(COLOR_GREEN)------------ PROCESS FINISHED ------------ $(COLOR_RESET)"
 
-LIBFT		=	src/libft
+$(NAME): $(OBJ)
+	$(CC) $(OBJ) $(LIBFT_LIB) $(MLX_LIB) -o $(NAME)
 
-#Librerias 
-LIBS		= $(LIBFT)/libft.a
+libmlx:
+	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && $(MAKE) -C $(MLX_DIR)/build -j4 -s
+	@echo "$(COLOR_GREEN)------------ MESSAGE: MLX COMPILED ------------ $(COLOR_RESET)"
 
-#Directorios
-SRC_DIR = src/
-OBJ_DIR = objs/
+$(LIBFT_LIB):
+	$(MAKE) -C $(LIBFT_DIR) -s
 
-# REGLAS # 
-all:	 libft $(NAME)
+ %.o: %.c
+	$(CC) $(CCFLAGS) -c $< $(HEADERS) -o $@
+	@echo "$(COLOR_GREEN)------------ MESSAGE: $@ COMPILED ------------ $(COLOR_RESET)"
 
-#Compilar 
-$(NAME):$(OBJ)
-		$(CC) $(OBJ) $(LIBS) -o $(NAME)
-	
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p $(OBJ_DIR)
-
-	@echo "$(YELLOW)Compiling: $<$(NC)"
-	@$(CC) $(CFLAGS) -o $@ -c $< 
-	@echo "$(YELLOW)Compiled!$(NC)"
-	
-# $@ : The file name of the target of the rule. If the target is an archive member, then ‘$@’ is the name of the archive file.
-# $< : The name of the first prerequisite.
-
-#compilar librerias individuales
-libft:
-	@echo "$(YELLOW)COMPILING LIBFT...$(NC)"
-	@$(MAKE) -C ./$(LIBFT)	
-	@echo "$(GREEN)LIBFT HAS BEEN COMPILED$(NC)"
-
-# Eliminar tmp libft
-fclean_libft:
-	@make fclean -C ./$(LIBFT)
-	@echo "$(RED)LIBFT FULL CLEANED!$(NC)"
-
-# Eliminar temporales
 clean:
-	@$(RM) -rf $(OBJ_DIR)
-	@echo "$(RED)OBJS AND DIRECTORY CLEANED!$(NC)"
-
-
-# Eliminar temporales y ejecutable fclean_mlx
-fclean: clean  fclean_libft
-	@$(RM) $(NAME)
-	@echo "$(RED)EXECUTABLE CLEANED!$(NC)"
-
+	@rm -f $(OBJ)
+	@rm -rf $(MLX_DIR)/build
+	@$(MAKE) -C $(LIBFT_DIR) clean -s
+	@echo "$(COLOR_GREEN)------------ MESSAGE: CLEANING COMPLETED ------------ $(COLOR_RESET)"
+	
+fclean:
+	@rm -f $(OBJ)
+	@rm -rf $(MLX_DIR)/build
+	@$(MAKE) -C $(LIBFT_DIR) fclean -s
+	@rm -f $(NAME)
+	@echo "$(COLOR_GREEN)------------ MESSAGE: FCLEANING COMPLETED ------------ $(COLOR_RESET)"
 
 re: fclean all
+
+.PHONY:	all, clean, fclean, re, libmlx
