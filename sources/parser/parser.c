@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 12:04:14 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/28 17:39:43 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/30 13:01:46 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,36 @@ int	verification_start(t_cube *cube,\
 	delete_tab(&cube->map, -1);
 	if (last_verification(cube, player_position))
 		return (1);
+	// reach_last_character(argv[1]);
 	
 	return (0); //LO PONGO PARA QUE COMPILE
 
 }
+// void reach_last_character(const char *file_path)
+// {
+//     int fd;
+//     char *line;
+//     char last_char = '\0';
+
+// 	fd = open(file_path, O_RDONLY); 
+//     while ((line = ft_get_next_line(fd)) != NULL)
+//     {
+//         if (line[0] != '\0')
+//         {
+//             last_char = line[0];
+//             for (int i = 0; line[i] != '\0'; i++)
+//             {
+//                 last_char = line[i];
+//             }
+//         }
+//         free(line);
+//     }
+//     if (last_char != '\0')
+//     {
+//         printf("Last character: %c\n", last_char);
+//     }
+//     close(fd);
+// }
 
 int	parser(int argc, char **argv) //EL ANTIGUO MAIN
 {
