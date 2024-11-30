@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/28 18:12:05 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/30 12:27:37 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,18 @@ typedef struct s_player_position
 
 typedef struct s_cube
 {
-	// mlx_t			*mlx;
-	char		**map;
-	int				player_x;
-	int				player_y;
-	char		*north_texture;
-	char		*south_texture;
-	char		*west_texture;
-	char		*east_texture;
-	int			floor_color[3];
-	int			ceiling_color[3];
-	int 		max_y;
-	int 		max_x;
-	// double			time_initial;
-
-	// int				map_axis_y; //copia + pega so_long no funciona con cube
-	// char				**map; //copia + pega so_long no funciona con cube
-	// int				map_bool; //copia + pega so_long no funciona con cube
-
-	// char				*png_floor;
-	// mlx_texture_t	*texture_floor;
-	// mlx_image_t		*img_floor;
-	
-	// char			*png_wall;
-	// mlx_texture_t	*texture_wall;	
-	// mlx_image_t		*img_wall;
-
+    char        **map;               // The parsed map
+    int         player_x;            // Player's X position
+    int         player_y;            // Player's Y position
+    char        *north_texture;      // North texture path
+    char        *south_texture;      // South texture path
+    char        *west_texture;       // West texture path
+    char        *east_texture;       // East texture path
+    int         floor_color[3];      // Floor color (RGB)
+    int         ceiling_color[3];    // Ceiling color (RGB)
+    int         max_y;               // Max Y size of the map
+    int         max_x;               // Max X size of the map
+    char        *raw_map;            // Temporary raw map
 } t_cube;
 
 // ---------------------- MLX ----------------------
@@ -141,12 +127,12 @@ void	free_line(char *line, t_cube *cube);
 void	free_content(t_cube *cube);
 void	array_free(char **array);
 
-//main.c
+//parser.c
 void	check_arg_number(int argc);
 int		verification_start(t_cube *cube,\
 			t_player_position *player_position, char **argv);
 int		parser(int argc, char **argv);
-
+void 	reach_last_character(const char *file_path);
 //util_map.c
 void	delete_tab(char ***map, int i);
 int		last_verification(t_cube *cube, t_player_position *player_position);

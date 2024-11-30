@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:34:23 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/29 09:54:57 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/30 11:56:47 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,3 @@ void	set_initial_position(t_player_position *player_position, int x, int y,
 	printf("Start position: %d, %d, %c\n", player_position->x,
 		player_position->y, player_position->orientation);
 }
-
-
