@@ -6,11 +6,11 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:19:39 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/06 17:45:24 by dangonz3         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:58:17 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "../include/cub3D_bonus.h"
 
 void	find_horizontal_hit(t_cub *c, t_ray *r, float rayAngle) //FCD
 {
@@ -48,18 +48,21 @@ void	find_horizontal_hit_loop(t_cub *c, t_ray *r)
 		r->y_to_check = r->next_horz_touch_y; //lo ajustamos para estar en el proximo cuadrado y no en el borde de la interseccion
 		if (r->isRayFacingUp)
 			r->y_to_check -= 1;
-		if (has_wall_at(c, r->x_to_check, r->y_to_check))
+		if (has_wall_at(c, r->x_to_check, r->y_to_check) == 1)
 		{
 			r->horizontal_wall_hit_x = r->next_horz_touch_x; 
 			r->horizontal_wall_hit_y = r->next_horz_touch_y;
 			r->found_horizontal_wall_hit = TRUE;
 			break;		
 		}
-		else
+/* 		if (has_wall_at(c, r->x_to_check, r->y_to_check) == 2)
 		{
-			r->next_horz_touch_x += r->xstep;
-			r->next_horz_touch_y += r->ystep;
-		}
+			r->horizontal_sprite_hit_x = r->next_horz_touch_x; 
+			r->horizontal_sprite_hit_y = r->next_horz_touch_y;
+			r->is_sprite = 1;
+		} */
+		r->next_horz_touch_x += r->xstep;
+		r->next_horz_touch_y += r->ystep;
 	}
 }
 
@@ -95,18 +98,21 @@ void	find_vertical_hit_loop(t_cub *c, t_ray *r)
 		if (r->isRayFacingLeft)
 			r->x_to_check -= 1;
 		r->y_to_check = r->next_vertical_touch_y;
-		if (has_wall_at(c, r->x_to_check, r->y_to_check)) 
+		if (has_wall_at(c, r->x_to_check, r->y_to_check) == 1) 
 		{
 			r->vertical_wall_hit_x = r->next_vertical_touch_x; 
 			r->vertical_wall_hit_y = r->next_vertical_touch_y;
 			r->found_vertical_wall_hit = TRUE;
 			break;		
 		}
-		else
+/* 		if (has_wall_at(c, r->x_to_check, r->y_to_check) == 2)
 		{
-			r->next_vertical_touch_x += r->xstep;
-			r->next_vertical_touch_y += r->ystep;
-		}
+			r->vertical_sprite_hit_x = r->next_horz_touch_x; 
+			r->vertical_sprite_hit_y = r->next_horz_touch_y;
+			r->is_sprite = 1;
+		} */
+		r->next_vertical_touch_x += r->xstep;
+		r->next_vertical_touch_y += r->ystep;
 	}
 }
 
@@ -124,5 +130,10 @@ int	has_wall_at(t_cub *c, float x, float y) //detecta si la coordenada es suelo 
 	map_grid_index_x >= (int)ft_strlen(c->map[map_grid_index_y]))
 		return (0);
 	tile = c->map[map_grid_index_y][map_grid_index_x];
-	return (tile != '0'); //si la casilla de las coordenadas no es suelo devolvemos 1
+	if (tile == 'M')
+		return (2);
+	if (tile == '1')
+		return (1);
+	return (0); //si la casilla de las coordenadas no es suelo devolvemos 1
 }
+

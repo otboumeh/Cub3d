@@ -6,11 +6,11 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:42:54 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/06 15:55:58 by dangonz3         ###   ########.fr       */
+/*   Updated: 2025/02/06 17:44:51 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "../include/cub3D_bonus.h"
 
 float	normalize_angle(float angle) //hace que el angulo sea positivo y menor a 360 (2PI) grados
 {

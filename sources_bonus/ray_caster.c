@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "../include/cub3D_bonus.h"
 
 void	ray_caster(t_cub *c) //inicializa el algoritmo para cada uno de los rayos
 {
@@ -42,6 +42,9 @@ void	cast_ray(t_cub *c, t_ray *r, int ray_index, float rayAngle)
 	find_horizontal_hit(c, r, rayAngle);
 	find_vertical_hit(c, r, rayAngle);	
 	select_ray_hit(c, r);
+	detect_doors(c, r);
+/* 	if (r->is_sprite)
+		choose_sprite_hit(c, r); */
 }
 
 void	init_ray_struct(t_ray *r, int ray_index, float rayAngle) //pone a cero todos los valores de la estructura para que podamos volver a usarla. Almacena el valor del actual angulo del rayo y les da valor a las flags que indican el cuadrante del angulo del rayo

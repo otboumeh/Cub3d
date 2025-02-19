@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/07 21:25:29 by dangonz3         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:24:32 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@
 # define WHITE 0xFFFFFFFF
 # define BLACK 0x000000FF
 
+//door
+# define OPEN_TIME 60
+# define OPEN_DISTANCE TILE_SIZE * 2
+# define DOOR_ROUTE "./texture/doom_door.png"
+
+//sprite
+# define SPRITE_ROUTE "./texture/cocodemon.png"
+# define WHITE_DECIMAL 4294967295
+
 typedef struct s_player_position
 {
 	int				x;
@@ -65,6 +74,16 @@ typedef struct s_cube
     int         	max_x_size;          // Max X size of the map
     char       		*raw_map;            // Temporary raw map
 } t_cube;
+
+typedef struct s_door
+{
+	int				x_door;
+	int				y_door;
+	int				is_closed;
+	int				opening;
+	int				closing;
+}	t_door;
+
 
 typedef struct s_texture //buffer para renderizar PNGs
 {
@@ -122,6 +141,25 @@ typedef struct s_ray
 	unsigned int	wall_color;
 
 	int				is_sprite;
+	float			horizontal_sprite_hit_x;
+	float			horizontal_sprite_hit_y;
+	float			vertical_sprite_hit_x;
+	float			vertical_sprite_hit_y;
+	float			sprite_horizontal_hit_distance;
+	float			sprite_vertical_hit_distance;
+	float			sprite_hit_x;
+	float			sprite_hit_y;
+	float			sprite_distance;
+	int				sprite_was_hit_vertical;
+
+	float			sprite_perp_distance;
+	float			sprite_distance_proj_plane;
+	float			sprite_strip_height;
+	int				sprite_top_pixel;
+	int				sprite_bottom_pixel;
+
+	int				im_door;
+	int				door_number;
 } t_ray;
 
 typedef struct s_cub
@@ -142,6 +180,9 @@ typedef struct s_cub
 	t_texture		*wall_s;
 	t_texture		*wall_w;
 	t_texture		*wall_e;
+	t_texture		*door_t;
+
+	t_texture		*sprite_t;
 	
 	float			p_fov; //init_game. valor estatico. Lo usamos durante el casteo para determinar el angulo de los rayos
 	float			p_turnspeed; //velocidad a la que rota el jugador cada vez que pulsamos MLX_KEY_LEFT y MLX_KEY_RIGHT
@@ -162,13 +203,26 @@ typedef struct s_cub
 	
 	unsigned int	timelastframe; //controla las frames/s del juego
 
-	float				minimap_start_y;
-	float				minimap_start_x;
-	float				minimap_area_y;
-	float				minimap_area_x;
-	float				minimap_tile_size;
-	float				minimap_player_size;
+	float			minimap_start_y;
+	float			minimap_start_x;
+	float			minimap_area_y;
+	float			minimap_area_x;
+	float			minimap_tile_size;
+	float			minimap_player_size;
+
+	unsigned int	sprite_strip[WIN_HEIGHT];
+
+	t_door 			*doors;
+	int 			door_number;
+	int				door_closing;
 } t_cub;
+
+//doors
+void		init_doors(t_cub *c);
+void		locate_doors(t_cub *c);
+void		open_doors(t_cub *c);
+void		detect_doors(t_cub *c, t_ray *r);
+void		update_doors(t_cub *c);
 
 //exit
 void		c_error(char *str, t_cub *c);
@@ -260,6 +314,13 @@ int			init_data_render(t_cub *c, t_ray *r);
 void		render(t_cub *c, t_ray *r);
 void		calculate_wall_strip(t_cub *c, t_ray *r, t_texture *text, int x);
 void		draw_wall_strip(t_cub *c, int x);
+
+//sprite_render
+void		choose_sprite_hit(t_cub *c, t_ray *r);
+void		sprite_render(t_cub *c);
+void		sprite_render_aux(t_cub *c, t_ray *r);
+void		calculate_sprite_strip(t_cub *c, t_ray *r, t_texture *t, int x);
+void		draw_sprite_strip(t_cub *c, t_ray *r, int x);
 
 //utils
 float		normalize_angle(float angle);
