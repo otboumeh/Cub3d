@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doors.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 18:13:00 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 12:04:10 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:21:12 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,19 @@ void	detect_doors(t_cub *c, t_ray *r)
 	t_door	*d;
 	int		map_grid_index_x;
 	int		map_grid_index_y;
-
+	
 	if (!c->door_number)
-		return ;
+		return ;	
 	door_index = 0;
-	map_grid_index_x = ((int)r->wall_hit_x / TILE_SIZE);
+	map_grid_index_x = ((int)r->wall_hit_x / TILE_SIZE); //cuando casteamos un float a int perdemos los valores decimales, redondeando el valor de las coordenadas al borde de la casilla actual
 	map_grid_index_y = ((int)r->wall_hit_y / TILE_SIZE);
 	while (door_index < c->door_number)
 	{
 		d = &c->doors[door_index];
-		if (d->x_door == map_grid_index_x - 1 && d->y_door == map_grid_index_y)
+		if ((r->was_hit_vertical && (r->rayangle > PI * 1 / 2 && r->rayangle < PI * 3 / 2) && (d->x_door == map_grid_index_x - 1 && d->y_door == map_grid_index_y)) || //oeste
+		(r->was_hit_vertical && !(r->rayangle > PI * 1 / 2 && r->rayangle < PI * 3 / 2) && (d->x_door == map_grid_index_x && d->y_door == map_grid_index_y)) || //este
+		(!r->was_hit_vertical && ((r->rayangle < PI && r->rayangle > 0)) && (d->x_door == map_grid_index_x && d->y_door == map_grid_index_y)) || //norte
+		(!r->was_hit_vertical && !((r->rayangle < PI && r->rayangle > 0)) && (d->x_door == map_grid_index_x && d->y_door == map_grid_index_y - 1))) //sur
 		{
 			r->im_door = 1;
 			r->door_number = door_index;

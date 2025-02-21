@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 13:56:03 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:30:37 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <limits.h>
 # include <stdint.h>
 
+//sizes
 # define WIN_WIDTH 2000
 # define WIN_HEIGHT 1000
 # define PLAYER_SIZE 10
@@ -29,19 +30,23 @@
 # define TILE_SIZE 1000
 # define NUM_RAYS WIN_WIDTH
 
+//bools
 # define FALSE 0
 # define TRUE 1
 
+//colors
 # define RED 0xFF0000FF
 # define GREEN 0x00FF00FF
 # define BLUE 0x0000FFFF
 # define WHITE 0xFFFFFFFF
 # define BLACK 0x000000FF
 
-# define OPEN_TIME 60
+//doors
+# define OPEN_TIME 20
 # define OPEN_DISTANCE TILE_SIZE * 2
 # define DOOR_ROUTE "./texture/doom_door.png"
 
+//sprites
 # define SPRITE_ROUTE "./texture/cocodemon.png"
 # define WHITE_DECIMAL 4294967295
 
@@ -78,6 +83,12 @@ typedef struct s_door
 	int				opening;
 	int				closing;
 }	t_door;
+
+typedef struct s_sprite
+{
+	int				x_sprite;
+	int				y_sprite;
+}	t_sprite;
 
 typedef struct s_texture
 {
@@ -153,6 +164,9 @@ typedef struct s_ray
 
 	int				im_door;
 	int				door_number;
+
+	int				im_sprite;
+	int				sprite_number;
 } t_ray;
 
 typedef struct s_cub
@@ -203,35 +217,43 @@ typedef struct s_cub
 	float			minimap_tile_size;
 	float			minimap_player_size;
 
-	unsigned int	sprite_strip[WIN_HEIGHT];
-
 	t_door			*doors;
 	int				door_number;
 	int				door_closing;
+
+	t_sprite		*sprites;
+	int 			sprite_number;
+	unsigned int	sprite_strip[WIN_HEIGHT];
 }					t_cub;
 
+//doors
 void		init_doors(t_cub *c);
 void		locate_doors(t_cub *c);
 void		open_doors(t_cub *c);
 void		detect_doors(t_cub *c, t_ray *r);
 void		update_doors(t_cub *c);
 
+//exit
 void		c_error(char *str, t_cub *c);
 void		c_close(t_cub *c);
 void		free_memory(t_cub *c);
 void		free_t_texture(t_texture *t);
 
+//init_game
 int			init_game(t_cub *c);
 int			load_texture(t_cub *c, t_texture **strc, char *route);
 int			load_texture_aux(t_cub *c, t_texture *texture, mlx_texture_t *png);
 void		get_map_max_x(t_cub *c);
 
+//init_player
 void		init_player(t_cub *c);
 int			locate_player(t_cub *c);
 void		set_player_position(int y, int x, t_cub *c);
 
+//main
 void		game_loop(void *param);
 
+//minimap
 void		minimap_render(t_cub *c);
 void		minimap_print(int x_map, int y_map, uint32_t element, t_cub *c);
 void		minimap_print_player(t_cub *c);
@@ -268,34 +290,50 @@ int			is_number(const char *str);
 void		set_initial_position(t_player_position *player_position, int x, \
 				int y, char orientation);
 
+//process_player_input
 void		process_player_input(void *param);
 void		mouse_hook(t_cub *c);
 void		update_player_position(t_cub *c);
 int			check_wall_collision(t_cub *c, float x, float y);
 
+//ray_caster_scan_hits
 void		find_horizontal_hit(t_cub *c, t_ray *r, float rayAngle);
 void		find_horizontal_hit_loop(t_cub *c, t_ray *r);
 void		find_vertical_hit(t_cub *c, t_ray *r, float rayAngle);
 void		find_vertical_hit_loop(t_cub *c, t_ray *r);
 int			has_wall_at(t_cub *c, float x, float y);
 
+//ray_caster
 void		ray_caster(t_cub *c);
 void		cast_ray(t_cub *c, t_ray *r, int ray_index, float rayAngle);
 void		init_ray_struct(t_ray *r, int ray_index, float rayAngle);
 void		select_ray_hit(t_cub *c, t_ray *r);
 
+//ray_render_aux
+void		draw_wall_strip(t_cub *c, int x);
+
+//ray_render
 void		ray_render(t_cub *c);
 int			init_data_render(t_cub *c, t_ray *r);
 void		render(t_cub *c, t_ray *r);
+void		render_aux(t_cub *c, t_ray *r);
 void		calculate_wall_strip(t_cub *c, t_ray *r, t_texture *text, int x);
-void		draw_wall_strip(t_cub *c, int x);
 
+//sprite_render_aux
+void	draw_wall_strip(t_cub *c, int x);
+
+//sprite_init
+void		init_sprite(t_cub *c);
+void		locate_sprite(t_cub *c);
+void		detect_sprites(t_cub *c, t_ray *r);
+
+//sprite_render
 void		choose_sprite_hit(t_cub *c, t_ray *r);
 void		sprite_render(t_cub *c);
 void		sprite_render_aux(t_cub *c, t_ray *r);
 void		calculate_sprite_strip(t_cub *c, t_ray *r, t_texture *t, int x);
-void		draw_sprite_strip(t_cub *c, t_ray *r, int x);
 
+//utils
 float		normalize_angle(float angle);
 uint32_t	get_color(uint8_t *ptr);
 uint32_t	get_color_alt(int *ptr);

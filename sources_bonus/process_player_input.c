@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_player_input.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:44:08 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 13:20:37 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:26:06 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,17 @@ void	mouse_hook(t_cub *c)
 	{
 		c->p_turndirection = -1;
 		if (WIN_WIDTH * 0.3 < x && x <= WIN_WIDTH * 0.45)
-			c->p_turnspeed *= 0.35;
+			c->p_turnspeed *= 0.2;
 		if (WIN_WIDTH * 0.15 < x && x <= WIN_WIDTH * 0.3)
-			c->p_turnspeed *= 0.6;
+			c->p_turnspeed *= 0.4;
 	}
 	if (WIN_WIDTH * 0.55 < x && x < WIN_WIDTH)
 	{
 		c->p_turndirection = 1;
 		if (WIN_WIDTH * 0.55 < x && x <= WIN_WIDTH * 0.7)
-			c->p_turnspeed *= 0.35;
+			c->p_turnspeed *= 0.2;
 		if (WIN_WIDTH * 0.7 < x && x <= WIN_WIDTH * 0.85)
-			c->p_turnspeed *= 0.6;
+			c->p_turnspeed *= 0.4;
 	}
 }
 

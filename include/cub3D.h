@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 13:46:30 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:31:53 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef CUBE3D_H
-# define CUBE3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include "../libft/libft.h"
 # include "../mlx/include/MLX42/MLX42.h"
