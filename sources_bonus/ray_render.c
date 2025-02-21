@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 13:21:58 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 16:25:13 by dangonz3         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:59:03 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,25 @@ int	init_data_render(t_cub *c, t_ray *r)
 	return (0);
 }
 
-void	render(t_cub *c, t_ray *r) //identificamos la direccion cardinal del muro, y le adjudicamos su textura correspondiente
-{	
+void	render(t_cub *c, t_ray *r)
+{
 	if (!r->was_hit_vertical)
 	{
 		if (r->im_door)
 		{
-			if (r->rayangle < PI && r->rayangle > 0) //DOOR
-				calculate_wall_strip(c, r, c->door_t, TILE_SIZE - 1 - ((int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE)); //muro norte, el rayo viene desde arriba
+			if (r->rayangle < PI && r->rayangle > 0)
+				calculate_wall_strip(c, r, c->door_t, TILE_SIZE - 1 - \
+				((int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE));
 			else
-				calculate_wall_strip(c, r, c->door_t, (int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE); //muro sur
+				calculate_wall_strip(c, r, c->door_t, \
+				(int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE);
 		}
 		else if (r->rayangle < PI && r->rayangle > 0)
-			calculate_wall_strip(c, r, c->wall_s, TILE_SIZE - 1 - ((int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE)); //muro sur, el rayo viene desde abajo
+			calculate_wall_strip(c, r, c->wall_s, TILE_SIZE - 1 - \
+			((int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE));
 		else
-			calculate_wall_strip(c, r, c->wall_n, (int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE); //muro norte
+			calculate_wall_strip(c, r, c->wall_n, \
+			(int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE);
 	}
 	else
 		render_aux(c, r);
@@ -65,41 +69,45 @@ void	render_aux(t_cub *c, t_ray *r)
 {
 	if (r->im_door)
 	{
-		if (r->rayangle > PI * 1 / 2 && r->rayangle < PI * 3 / 2) //DOOR
-			calculate_wall_strip(c, r, c->door_t, TILE_SIZE - 1 - ((int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE)); //muro oeste, el rayo viene desde la derecha
-		else //DOOR
-			calculate_wall_strip(c, r, c->door_t, (int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE); //muro este
+		if (r->rayangle > PI * 1 / 2 && r->rayangle < PI * 3 / 2)
+			calculate_wall_strip(c, r, c->door_t, TILE_SIZE - 1 - \
+			((int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE));
+		else
+			calculate_wall_strip(c, r, c->door_t, \
+			(int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE);
 	}
 	else if (r->rayangle > PI * 1 / 2 && r->rayangle < PI * 3 / 2)
-		calculate_wall_strip(c, r, c->wall_w, TILE_SIZE - 1 - ((int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE)); //muro oeste, el rayo viene desde la derecha
-	else 
-		calculate_wall_strip(c, r, c->wall_e, (int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE); //muro este
+		calculate_wall_strip(c, r, c->wall_w, TILE_SIZE - 1 - \
+		((int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE));
+	else
+		calculate_wall_strip(c, r, c->wall_e, \
+		(int)(r->wall_hit_x + r->wall_hit_y) % TILE_SIZE);
 }
 
 void	calculate_wall_strip(t_cub *c, t_ray *r, t_texture *t, int x)
 {
 	int	y;
 	int	anti_y;
-	int	img_x;
-	int	img_y;
 
 	y = 0;
 	while (y < r->wall_top_pixel)
 		c->strip[y++] = c->ceiling;
-	img_x = 1;
+	r->img_x = 1;
 	if (x != 1)
-		img_x = (x * t->width) / TILE_SIZE;
+		r->img_x = (x * t->width) / TILE_SIZE;
 	anti_y = y;
 	if (r->wall_top_pixel < 0)
 		anti_y += r->wall_top_pixel;
 	while (y < r->wall_bottom_pixel && y < WIN_HEIGHT)
 	{
-		img_y = ((y - anti_y) * t->height) / (r->wall_bottom_pixel - r->wall_top_pixel);
-		if ((r->im_door && c->doors[r->door_number].is_closed && 
-		c->doors[r->door_number].opening))
+		r->img_y = ((y - anti_y) * t->height) / \
+		(r->wall_bottom_pixel - r->wall_top_pixel);
+		if ((r->im_door && c->doors[r->door_number].is_closed \
+		&& c->doors[r->door_number].opening))
 			c->strip[y++] = WHITE;
-		else if (img_y >= 0 && img_y < t->height && img_x >= 0 && img_x < t->width)
-			c->strip[y++] = t->pixels[img_y][img_x];
+		else if (r->img_y >= 0 && r->img_y < t->height
+			&& r->img_x >= 0 && r->img_x < t->width)
+			c->strip[y++] = t->pixels[r->img_y][r->img_x];
 	}
 	while (y < WIN_HEIGHT)
 		c->strip[y++] = c->floor;

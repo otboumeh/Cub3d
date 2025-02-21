@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 16:31:53 by dangonz3         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:55:53 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define PLAYER_SIZE 10
 # define PI 3.14159265
 # define ANGLE_ROTATION_SIZE 5
+# define MOVESPEED_MOD 10
 # define FRAMES 30 
 # define TILE_SIZE 1000
 # define NUM_RAYS WIN_WIDTH
@@ -74,10 +75,10 @@ typedef struct s_ray
 {
 	float			rayangle;
 	int				ray_index;
-	int				isRayFacingDown;
-	int				isRayFacingUp;
-	int				isRayFacingLeft;
-	int				isRayFacingRight;
+	int				israyfacingdown;
+	int				israyfacingup;
+	int				israyfacingleft;
+	int				israyfacingright;
 
 	float			xintercept;
 	float			yintercept;
@@ -115,14 +116,12 @@ typedef struct s_ray
 	int				wall_top_pixel;
 	int				wall_bottom_pixel;
 	unsigned int	wall_color;
-
-	int				is_sprite;
 }					t_ray;
 
 typedef struct s_cub
 {
 	void			*mlx;
-	mlx_image_t		*win_mlx3D;
+	mlx_image_t		*win_mlx3d;
 
 	t_cube			*parse_struct;
 
@@ -244,4 +243,4 @@ uint32_t	get_color(uint8_t *ptr);
 uint32_t	get_color_alt(int *ptr);
 float		distance_between_points(float x1, float y1, float x2, float y2);
 
-# endif
+#endif

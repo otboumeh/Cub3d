@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:55:16 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/19 16:22:01 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:56:12 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_player(t_cub *c)
 	c->p_fov = (60 * PI / 180);
 	c->p_turnspeed = ANGLE_ROTATION_SIZE * (PI / 180);
 	c->p_turnspeed_original = c->p_turnspeed;
-	c->p_walkspeed = TILE_SIZE / 10;
+	c->p_walkspeed = TILE_SIZE / MOVESPEED_MOD;
 	locate_player(c);
 	init_doors(c);
 }

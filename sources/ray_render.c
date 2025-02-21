@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 13:21:58 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 11:53:30 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:26:35 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ void	calculate_wall_strip(t_cub *c, t_ray *r, t_texture *t, int x)
 	{
 		img_y = ((y - anti_y) * t->height) / (r->wall_bottom_pixel - \
 		r->wall_top_pixel);
-		if (r->ray_index == 0)
-			printf("t->pixels[img_y][img_x] = %u\n", t->pixels[img_y][img_x]);
 		if (img_y >= 0 && img_y < t->height && img_x >= 0 && img_x < t->width)
 			c->strip[y++] = t->pixels[img_y][img_x];
 	}
@@ -97,5 +95,5 @@ void	draw_wall_strip(t_cub *c, int x)
 
 	y = -1;
 	while (++y < WIN_HEIGHT)
-		mlx_put_pixel(c->win_mlx3D, x, y, c->strip[y]);
+		mlx_put_pixel(c->win_mlx3d, x, y, c->strip[y]);
 }

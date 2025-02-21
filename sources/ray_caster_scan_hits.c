@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster_scan_hits.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:19:39 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 11:58:11 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:34:24 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	find_horizontal_hit(t_cub *c, t_ray *r, float rayAngle)
 	r->horizontal_wall_hit_y = 0;
 	r->horizontal_wall_content = 0;
 	r->yintercept = floor(c->p_y / TILE_SIZE) * TILE_SIZE;
-	if (r->isRayFacingDown)
+	if (r->israyfacingdown)
 		r->yintercept += TILE_SIZE;
 	r->xintercept = c->p_x + (r->yintercept - c->p_y) / tan(rayAngle);
 	r->ystep = TILE_SIZE;
-	if (r->isRayFacingUp)
+	if (r->israyfacingup)
 		r->ystep *= -1;
 	r->xstep = TILE_SIZE / tan(rayAngle);
-	if (r->isRayFacingLeft && r->xstep > 0)
+	if (r->israyfacingleft && r->xstep > 0)
 		r->xstep *= -1;
-	if (r->isRayFacingRight && r->xstep < 0)
+	if (r->israyfacingright && r->xstep < 0)
 		r->xstep *= -1;
 	find_horizontal_hit_loop(c, r);
 }
@@ -42,7 +42,7 @@ void	find_horizontal_hit_loop(t_cub *c, t_ray *r)
 	{
 		r->x_to_check = r->next_horz_touch_x;
 		r->y_to_check = r->next_horz_touch_y;
-		if (r->isRayFacingUp)
+		if (r->israyfacingup)
 			r->y_to_check -= 1;
 		if (has_wall_at(c, r->x_to_check, r->y_to_check))
 		{
@@ -66,16 +66,16 @@ void	find_vertical_hit(t_cub *c, t_ray *r, float rayAngle)
 	r->vertical_wall_hit_y = 0;
 	r->vertical_wall_content = 0;
 	r->xintercept = floor(c->p_x / TILE_SIZE) * TILE_SIZE;
-	if (r->isRayFacingRight)
+	if (r->israyfacingright)
 		r->xintercept += TILE_SIZE;
 	r->yintercept = c->p_y + (r->xintercept - c->p_x) * tan(rayAngle);
 	r->xstep = TILE_SIZE;
-	if (r->isRayFacingLeft)
+	if (r->israyfacingleft)
 		r->xstep *= -1;
 	r->ystep = TILE_SIZE * tan(rayAngle);
-	if (r->isRayFacingUp && r->ystep > 0)
+	if (r->israyfacingup && r->ystep > 0)
 		r->ystep *= -1;
-	else if (r->isRayFacingDown && r->ystep < 0)
+	else if (r->israyfacingdown && r->ystep < 0)
 		r->ystep *= -1;
 	find_vertical_hit_loop(c, r);
 }
@@ -89,7 +89,7 @@ void	find_vertical_hit_loop(t_cub *c, t_ray *r)
 	>= 0 && r->next_vertical_touch_y <= c->map_max_y)
 	{
 		r->x_to_check = r->next_vertical_touch_x;
-		if (r->isRayFacingLeft)
+		if (r->israyfacingleft)
 			r->x_to_check -= 1;
 		r->y_to_check = r->next_vertical_touch_y;
 		if (has_wall_at(c, r->x_to_check, r->y_to_check))

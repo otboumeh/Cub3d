@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 15:52:48 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 12:46:37 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:56:18 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	init_ray_struct(t_ray *r, int ray_index, float rayangle)
 	rayangle = normalize_angle(rayangle);
 	r->rayangle = rayangle;
 	r->ray_index = ray_index;
-	r->isRayFacingDown = (rayangle > 0 && rayangle < PI);
-	r->isRayFacingUp = !r->isRayFacingDown;
-	r->isRayFacingRight = (rayangle < 0.5 * PI) || (rayangle > 1.5 * PI);
-	r->isRayFacingLeft = !r->isRayFacingRight;
+	r->israyfacingdown = (rayangle > 0 && rayangle < PI);
+	r->israyfacingup = !r->israyfacingdown;
+	r->israyfacingright = (rayangle < 0.5 * PI) || (rayangle > 1.5 * PI);
+	r->israyfacingleft = !r->israyfacingright;
 }
 
 void	select_ray_hit(t_cub *c, t_ray *r)

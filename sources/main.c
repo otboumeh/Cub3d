@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:27:23 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/19 18:20:17 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:35:06 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 	c->parse_struct = &cube;
 	init_game(c);
 	init_player(c);
-	mlx_image_to_window(c->mlx, c->win_mlx3D, 0, 0);
+	mlx_image_to_window(c->mlx, c->win_mlx3d, 0, 0);
 	mlx_loop_hook(c->mlx, game_loop, c);
 	mlx_loop(c->mlx);
 	c_close(c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 17:55:44 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 12:19:33 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:35:06 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	minimap_print(int x_map, int y_map, uint32_t element, t_cub *c)
 	{
 		x = 0;
 		while (x < c->minimap_tile_size)
-			mlx_put_pixel(c->win_mlx3D, x++ + x_map * \
+			mlx_put_pixel(c->win_mlx3d, x++ + x_map * \
 				c->minimap_tile_size + c->minimap_start_x,
 				y + y_map * c->minimap_tile_size + c->minimap_start_y, element);
 		y++;
@@ -62,7 +62,7 @@ void	minimap_print_player(t_cub *c)
 		x = 0;
 		while (x < c->minimap_player_size)
 		{
-			mlx_put_pixel(c->win_mlx3D,
+			mlx_put_pixel(c->win_mlx3d,
 				x + c->p_x / TILE_SIZE * c->minimap_tile_size + \
 				c->minimap_start_x,
 				y + c->p_y / TILE_SIZE * c->minimap_tile_size + \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:35:49 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/19 17:17:42 by otboumeh         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:35:06 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	init_game(t_cub *c)
 	c->mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "CUB3D", true);
 	if (!c->mlx)
 		return (c_error("Couldn't mlx_init init_game", c), EXIT_FAILURE);
-	c->win_mlx3D = mlx_new_image(c->mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!c->win_mlx3D)
+	c->win_mlx3d = mlx_new_image(c->mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!c->win_mlx3d)
 		return (c_error("Couldn't mlx_new_image in init_game", c),
 			EXIT_FAILURE);
 	c->map = c->parse_struct->map;

@@ -6,12 +6,12 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/21 16:30:37 by dangonz3         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:55:49 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_H
-# define CUBE3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "../libft/libft.h"
 # include "../mlx/include/MLX42/MLX42.h"
@@ -26,6 +26,7 @@
 # define PLAYER_SIZE 10
 # define PI 3.14159265
 # define ANGLE_ROTATION_SIZE 5
+# define MOVESPEED_MOD 10
 # define FRAMES 30 
 # define TILE_SIZE 1000
 # define NUM_RAYS WIN_WIDTH
@@ -43,12 +44,8 @@
 
 //doors
 # define OPEN_TIME 20
-# define OPEN_DISTANCE TILE_SIZE * 2
+# define OPEN_DISTANCE 2000
 # define DOOR_ROUTE "./texture/doom_door.png"
-
-//sprites
-# define SPRITE_ROUTE "./texture/cocodemon.png"
-# define WHITE_DECIMAL 4294967295
 
 typedef struct s_player_position
 {
@@ -84,12 +81,6 @@ typedef struct s_door
 	int				closing;
 }	t_door;
 
-typedef struct s_sprite
-{
-	int				x_sprite;
-	int				y_sprite;
-}	t_sprite;
-
 typedef struct s_texture
 {
 	int				width;
@@ -102,10 +93,10 @@ typedef struct s_ray
 	float			rayangle;
 	int				ray_index;
 
-	int				isRayFacingDown;
-	int				isRayFacingUp;
-	int				isRayFacingLeft;
-	int				isRayFacingRight;
+	int				israyfacingdown;
+	int				israyfacingup;
+	int				israyfacingleft;
+	int				israyfacingright;
 
 	float			xintercept;
 	float			yintercept;
@@ -144,35 +135,17 @@ typedef struct s_ray
 	int				wall_bottom_pixel;
 	unsigned int	wall_color;
 
-	int				is_sprite;
-	float			horizontal_sprite_hit_x;
-	float			horizontal_sprite_hit_y;
-	float			vertical_sprite_hit_x;
-	float			vertical_sprite_hit_y;
-	float			sprite_horizontal_hit_distance;
-	float			sprite_vertical_hit_distance;
-	float			sprite_hit_x;
-	float			sprite_hit_y;
-	float			sprite_distance;
-	int				sprite_was_hit_vertical;
-
-	float			sprite_perp_distance;
-	float			sprite_distance_proj_plane;
-	float			sprite_strip_height;
-	int				sprite_top_pixel;
-	int				sprite_bottom_pixel;
-
 	int				im_door;
 	int				door_number;
 
-	int				im_sprite;
-	int				sprite_number;
-} t_ray;
+	int				img_x;
+	int				img_y;
+}	t_ray;
 
 typedef struct s_cub
 {
 	void			*mlx;
-	mlx_image_t		*win_mlx3D;
+	mlx_image_t		*win_mlx3d;
 
 	t_cube			*parse_struct;
 
@@ -188,8 +161,6 @@ typedef struct s_cub
 	t_texture		*wall_w;
 	t_texture		*wall_e;
 	t_texture		*door_t;
-
-	t_texture		*sprite_t;
 
 	float			p_fov;
 	float			p_turnspeed;
@@ -220,11 +191,12 @@ typedef struct s_cub
 	t_door			*doors;
 	int				door_number;
 	int				door_closing;
-
-	t_sprite		*sprites;
-	int 			sprite_number;
-	unsigned int	sprite_strip[WIN_HEIGHT];
+	int				map_grid_index_x;
+	int				map_grid_index_y;
 }					t_cub;
+
+//doors_aux
+int			detect_doors_aux(t_cub *c, t_ray *r, t_door *d);
 
 //doors
 void		init_doors(t_cub *c);
@@ -318,20 +290,6 @@ int			init_data_render(t_cub *c, t_ray *r);
 void		render(t_cub *c, t_ray *r);
 void		render_aux(t_cub *c, t_ray *r);
 void		calculate_wall_strip(t_cub *c, t_ray *r, t_texture *text, int x);
-
-//sprite_render_aux
-void	draw_wall_strip(t_cub *c, int x);
-
-//sprite_init
-void		init_sprite(t_cub *c);
-void		locate_sprite(t_cub *c);
-void		detect_sprites(t_cub *c, t_ray *r);
-
-//sprite_render
-void		choose_sprite_hit(t_cub *c, t_ray *r);
-void		sprite_render(t_cub *c);
-void		sprite_render_aux(t_cub *c, t_ray *r);
-void		calculate_sprite_strip(t_cub *c, t_ray *r, t_texture *t, int x);
 
 //utils
 float		normalize_angle(float angle);
