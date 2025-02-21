@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 18:13:00 by dangonz3          #+#    #+#             */
-/*   Updated: 2025/02/10 12:25:22 by dangonz3         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:32:15 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	open_doors(t_cub *c)
 		d = &c->doors[door_index];
 		distance = distance_between_points(c->p_x, c->p_y, 
 		d->x_door * TILE_SIZE, d->y_door * TILE_SIZE);
-		if (distance <= OPEN_DISTANCE && d->is_closed && !d->opening) //abrir
+		if (distance <= OPEN_DISTANCE && d->is_closed && !d->opening)
 			d->opening = 1;
 		if (distance <= OPEN_DISTANCE * 1.5 && distance > TILE_SIZE && 
-		!d->is_closed && !d->opening && c->map[d->y_door][d->x_door] == '0') //cerrar
+		!d->is_closed && !d->opening && c->map[d->y_door][d->x_door] == '0')
 		{
 			d->closing = 1;
 			c->door_closing = 1;
@@ -90,7 +90,19 @@ void	detect_doors(t_cub *c, t_ray *r)
 	while (door_index < c->door_number)
 	{
 		d = &c->doors[door_index];
-		if (d->x_door == map_grid_index_x - 1 && d->y_door == map_grid_index_y)
+
+		if (r->ray_index == 0)
+			printf("d->x_door %d == map_grid_index_x - 1 %d && d->y_door %d == map_grid_index_y %d\n", d->x_door, map_grid_index_x - 1, d->y_door, map_grid_index_y);
+
+		if ((r->was_hit_vertical && (r->rayangle > PI * 1 / 2 && r->rayangle < PI * 3 / 2) && (d->x_door == map_grid_index_x - 1 && d->y_door == map_grid_index_y)) || //oeste
+		(r->was_hit_vertical && !(r->rayangle > PI * 1 / 2 && r->rayangle < PI * 3 / 2) && (d->x_door == map_grid_index_x && d->y_door == map_grid_index_y)) ||
+		(!r->was_hit_vertical && ((r->rayangle < PI && r->rayangle > 0)) && (d->x_door == map_grid_index_x && d->y_door == map_grid_index_y)) ||
+		(!r->was_hit_vertical && !((r->rayangle < PI && r->rayangle > 0)) && (d->x_door == map_grid_index_x && d->y_door == map_grid_index_y - 1))		
+		
+		
+		
+		)
+		
 		{
 			r->im_door = 1;
 			r->door_number = door_index;
